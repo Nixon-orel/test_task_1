@@ -1,0 +1,17 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch("API_DB_HOST", 'localhost') %>
+  port: <%= ENV.fetch("API_DB_PORT", '5432') %>
+  pool: <%= ENV["DB_POOL"] || ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  username: <%= ENV['API_DATABASE_USER'] %>
+  password: <%= ENV['API_DATABASE_PASSWORD'] %>
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("RAILS_DB_DEV_NAME", 'api_development') %>
+
+test:
+  <<: *default
+  database: <%= ENV.fetch("RAILS_DB_TEST_NAME", 'api_test') %>
