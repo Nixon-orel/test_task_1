@@ -3,7 +3,7 @@
 module FindHistoryFromTimeService
   module_function
 
-  def find_history_from_time(time)
+  def perform(time)
     datetime = Time.at(time.to_i)
     date = datetime.to_date
     return if WeatherHistory.pluck(:created_at).map(&:to_date).exclude?(date)

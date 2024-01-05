@@ -1,0 +1,110 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/weather/current":
+    get:
+      summary: current
+      tags:
+      - current
+      responses:
+        '200':
+          description: return current temperature
+  "/weather/max":
+    get:
+      summary: max
+      tags:
+      - max
+      responses:
+        '200':
+          description: return max temperature
+  "/weather/min":
+    get:
+      summary: min
+      tags:
+      - min
+      responses:
+        '200':
+          description: return min temperature
+  "/weather/avg":
+    get:
+      summary: avg
+      tags:
+      - avg
+      responses:
+        '200':
+          description: return avg temperature
+  "/weather/by_time":
+    get:
+      summary: by_time
+      tags:
+      - by_time
+      parameters:
+      - name: time
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: return by_time hash
+        '404':
+          description: return error 404
+  "/health":
+    get:
+      summary: health
+      tags:
+      - health
+      responses:
+        '200':
+          description: return ok
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
+components:
+  schemas:
+    weather_current:
+      type: object
+      properties:
+        current_temperature:
+          type: float
+          example: 3.1
+    weather_max:
+      type: object
+      properties:
+        maximum_temperature_over_24_hours:
+          type: float
+          example: 3.1
+    weather_min:
+      type: object
+      properties:
+        minimum_temperature_over_24_hours:
+          type: float
+          example: 3.1
+    weather_avg:
+      type: object
+      properties:
+        average_temperature_over_24_hours:
+          type: float
+          example: 3.1
+    weather_by_time_ok:
+      type: object
+      properties:
+        temperature:
+          type: float
+          example: 3.0
+        time:
+          type: string
+          example: '2024-01-03 12:23:31 +0000'
+    weather_by_time_not_found:
+      type: object
+      properties:
+        error:
+          type: string
+          example: 404 Not Found
+    health:
+      type: string
+      example: ok

@@ -3,15 +3,17 @@
 module AddWeatherHistoryService
   module_function
 
-  def transform_history
+  def perform
     histories = WeatherApi::History.perform
 
     check_or_create_today_histories!(histories)
     check_or_create_yesterday_histories!(histories)
   end
-  handle_asynchronously :transform_history
+  handle_asynchronously :perform
 
   def check_or_create_today_histories!(histories)
+    return if histories.blank?
+
     weather_history_today = WeatherHistory.record_with_expected_date(Time.now).first
     today_histories = parse_date(histories, Date.today)
 
@@ -32,6 +34,8 @@ module AddWeatherHistoryService
   end
 
   def check_or_create_yesterday_histories!(histories)
+    return if histories.blank?
+
     weather_history_yesterday = WeatherHistory.record_with_expected_date(Time.now - 1.day).first
     yesterday_histories = parse_date(histories, Date.yesterday)
 

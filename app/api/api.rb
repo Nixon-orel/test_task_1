@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 module Api
   class Api < Grape::API
     format :json
 
     helpers do
       def find_history_by_time(time)
-        FindHistoryFromTimeService.find_history_from_time(time)
+        FindHistoryFromTimeService.perform(time)
       end
 
       def not_found

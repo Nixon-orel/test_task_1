@@ -3,17 +3,8 @@
 require 'rails_helper'
 
 RSpec.configure do |config|
-  # Specify a root folder where Swagger JSON files are generated
-  # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
-  # to ensure that it's configured to serve Swagger from the same folder
   config.openapi_root = Rails.root.join('swagger').to_s
 
-  # Define one or more Swagger documents and provide global metadata for each one
-  # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
-  # be generated at the provided relative path under openapi_root
-  # By default, the operations defined in spec files are added to the first
-  # document below. You can override this behavior by adding a openapi_spec tag to the
-  # the root example_group in your specs, e.g. describe '...', openapi_spec: 'v2/swagger.json'
   config.openapi_specs = {
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
@@ -31,7 +22,59 @@ RSpec.configure do |config|
             }
           }
         }
-      ]
+      ],
+      components: {
+        schemas: {
+          weather_current: {
+            type: :object,
+            properties: {
+              current_temperature: { type: :float,
+                                     example: 3.1 }
+            }
+          },
+          weather_max: {
+            type: :object,
+            properties: {
+              maximum_temperature_over_24_hours: { type: :float,
+                                                   example: 3.1 }
+            }
+          },
+          weather_min: {
+            type: :object,
+            properties: {
+              minimum_temperature_over_24_hours: { type: :float,
+                                                   example: 3.1 }
+            }
+          },
+          weather_avg: {
+            type: :object,
+            properties: {
+              average_temperature_over_24_hours: { type: :float,
+                                                   example: 3.1 }
+            }
+          },
+          weather_by_time_ok: {
+            type: :object,
+            properties: {
+              temperature: { type: :float,
+                             example: 3.0 },
+              time: { type: :string,
+                      example: '2024-01-03 12:23:31 +0000' }
+            }
+          },
+          weather_by_time_not_found: {
+            type: :object,
+            properties: {
+              error: { type: :string,
+                       example: '404 Not Found'}
+            }
+          },
+          health: {
+            type: :string,
+            example: 'ok'
+          }
+        }
+      }
     }
   }
 

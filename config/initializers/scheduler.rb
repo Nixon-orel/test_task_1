@@ -19,5 +19,5 @@ scheduler.every '5m' do
 end
 
 scheduler.every '24h' do
-  AddWeatherHistoryService.transform_history
+  AddWeatherHistoryService.perform
 end

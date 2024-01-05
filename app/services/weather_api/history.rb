@@ -13,7 +13,7 @@ module WeatherApi
     def transform_responce(responce)
       result_array = []
       responce.each do |hour|
-        result_array << {hour['LocalObservationDateTime'] => hour['Temperature']['Metric']['Value']}
+        result_array << { hour['LocalObservationDateTime'] => hour['Temperature']['Metric']['Value'] }
       end
       result_array
     end
